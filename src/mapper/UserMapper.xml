@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserMapper">
+
+	<!-- 查询用户总数 -->
+	<select id="count" resultType="int">
+		SELECT COUNT(userId) FROM `user`
+	</select>
+	
+	<!-- 通过用户ID查找用户 -->
+	<select id="getUserById" parameterType="Integer" resultType="User">
+		SELECT userId, userName, pwd, address, phone, email, sex, level, point, type
+		FROM `user` WHERE userId = #{userId}
+	</select>
+	
+	<!-- 新增用户 -->
+	<insert id="addUser" parameterType="User">
+		INSERT INTO `user`(userName, pwd, address, phone, email) values
+		(#{userName}, #{pwd}, #{address}, #{phone}, #{email})
+	</insert>
+	
+	<!-- 用户登录，根据用户和密码匹配用户 -->
+	<select id="login" resultType="User">
+		SELECT * FROM `user` WHERE userName=#{userName} AND pwd=#{pwd}
+	</select>
+	
+	<!-- 检查用户名是否存在 -->
+	<select id="checkUserName" resultType="int">
+		SELECT COUNT(userId) AS n FROM `user` WHERE userName=#{userName}
+	</select>
+	
+	<!-- 用户列表结果映射 -->
+	<resultMap type="User" id="userList">
+		<id property="userId" column="userId" />
+		<result property="userName" column="userName" />
+		<result property="pwd" column="pwd" />
+		<result property="address" column="address" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="sex" column="sex" />
+		<result property="level" column="level" />
+		<result property="point" column="point" />
+		<result property="type" column="type" />
+	</resultMap>
+	
+</mapper>

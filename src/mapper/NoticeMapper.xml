@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.NoticeMapper">
+	
+	<!-- 获取公告总数 -->
+	<select id="count" resultType="int">
+		select count(noticeId) from notice
+	</select>
+	
+	<!-- 根据公告ID获取公告 -->
+	<select id="getNoticeById" resultType="Notice">
+		select * from notice where noticeId = #{noticeId}
+	</select>
+	
+	<!-- 分页查找公告 -->
+	<select id="getNoticeByPage" resultType="Notice">
+		select * from `notice` order by time desc limit #{offset}, #{pageSize}
+	</select>
+	
+</mapper>
